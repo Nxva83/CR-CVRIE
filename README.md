@@ -1,23 +1,23 @@
 # CR-CVRIE
 
-Projet d'analyse de donnees en Python autour de deux axes:
+Python data analysis project focused on two main areas:
 
-1. Clustering non supervise de temoignages patients (NLP)
-2. Preparation et baseline de classification sur un dataset d'images medicales (Kaggle)
+1. Unsupervised clustering of patient testimonials (NLP)
+2. Preparation and baseline classification on a medical image dataset (Kaggle)
 
-Le repository contient principalement deux notebooks:
+The repository mainly contains two notebooks:
 
 - `unsupervised_clustering.ipynb`
 - `kaggle_dataset.ipynb`
 
-## Objectifs
+## Goals
 
-- Construire un pipeline non supervise de bout en bout sur des textes non labels
-- Comparer plusieurs algorithmes de clustering avec des metriques adaptees
-- Visualiser et interpreter les groupes obtenus
-- Telecharger/nettoyer un dataset d'images et etablir une baseline de classification
+- Build an end-to-end unsupervised pipeline for unlabeled text data
+- Compare multiple clustering algorithms with suitable metrics
+- Visualize and interpret the resulting groups
+- Download/clean an image dataset and establish a classification baseline
 
-## Structure du projet
+## Project structure
 
 ```text
 CR-CVRIE/
@@ -27,67 +27,67 @@ CR-CVRIE/
 `- kaggle_dataset.ipynb
 ```
 
-## Donnees
+## Data
 
-### 1) Donnees texte
+### 1) Text data
 
-- Fichier: `Student_Dataset.csv`
-- Contenu: temoignages patients (format heterogene selon les lignes)
-- Utilisation: clustering non supervise dans `unsupervised_clustering.ipynb`
+- File: `Student_Dataset.csv`
+- Content: patient testimonials (heterogeneous format depending on the row)
+- Usage: unsupervised clustering in `unsupervised_clustering.ipynb`
 
-### 2) Donnees images
+### 2) Image data
 
 - Source: Kaggle via `kagglehub`
-- Dataset cible dans le notebook: `bmadushanirodrigo/fracture-multi-region-x-ray-data`
-- Utilisation: preparation, nettoyage, split train/val/test, baseline RandomForest dans `kaggle_dataset.ipynb`
+- Target dataset in the notebook: `bmadushanirodrigo/fracture-multi-region-x-ray-data`
+- Usage: preparation, cleaning, train/val/test split, RandomForest baseline in `kaggle_dataset.ipynb`
 
-## Methodologie
+## Methodology
 
 ### Notebook 1 - `unsupervised_clustering.ipynb`
 
-Pipeline principal:
+Main pipeline:
 
-1. Parsing du CSV (gestion des formats `id,testimony` et `id,color,testimony`)
-2. Nettoyage texte (lowercase, ponctuation, espaces)
-3. Vectorisation TF-IDF (unigrammes + bigrammes)
-4. Reduction dimensionnelle (SVD + normalisation)
-5. Comparaison de modeles:
+1. CSV parsing (handling `id,testimony` and `id,color,testimony` formats)
+2. Text cleaning (lowercase, punctuation, spaces)
+3. TF-IDF vectorization (unigrams + bigrams)
+4. Dimensionality reduction (SVD + normalization)
+5. Model comparison:
 	- KMeans
 	- Agglomerative Clustering
 	- DBSCAN
-6. Evaluation sans labels:
-	- Silhouette (plus grand = mieux)
-	- Calinski-Harabasz (plus grand = mieux)
-	- Davies-Bouldin (plus petit = mieux)
-7. Selection automatique du meilleur modele
-8. Visualisations PCA et extraction de mots-cles par cluster
+6. Label-free evaluation:
+	- Silhouette (higher = better)
+	- Calinski-Harabasz (higher = better)
+	- Davies-Bouldin (lower = better)
+7. Automatic best-model selection
+8. PCA visualizations and keyword extraction by cluster
 
-Bonus dans le notebook:
+Notebook bonus:
 
-- Section de comparaison Avant/Apres pour mesurer l'impact d'un changement de modele/hyperparametres
+- Before/After comparison section to measure the impact of model/hyperparameter changes
 
 ### Notebook 2 - `kaggle_dataset.ipynb`
 
-Pipeline principal:
+Main pipeline:
 
-1. Telechargement du dataset Kaggle avec `kagglehub`
-2. Exploration des fichiers
-3. Nettoyage:
-	- suppression des doublons via hash de pixels
-	- detection/suppression des images corrompues
-4. Construction d'un DataFrame (`filepath`, `label`)
-5. Split stratifie train/validation/test (70/15/15)
-6. Preprocessing image (resize, normalisation, flatten)
-7. Entrainement d'une baseline `RandomForestClassifier`
+1. Downloading the Kaggle dataset with `kagglehub`
+2. File exploration
+3. Cleaning:
+	- duplicate removal using pixel hashes
+	- corrupted image detection/removal
+4. Building a DataFrame (`filepath`, `label`)
+5. Stratified train/validation/test split (70/15/15)
+6. Image preprocessing (resize, normalization, flatten)
+7. Training a `RandomForestClassifier` baseline
 8. Evaluation (accuracy + classification report)
-9. Bloc diagnostic (verification du leak, baseline aleatoire, importance des features)
+9. Diagnostic block (leak check, random baseline, feature importance)
 
-## Prerequis
+## Prerequisites
 
 - Python 3.10+
-- Jupyter Notebook ou VS Code avec extension Notebook
+- Jupyter Notebook or VS Code with the Notebook extension
 
-Packages utilises (selon notebook):
+Packages used (depending on the notebook):
 
 - numpy
 - pandas
@@ -95,7 +95,7 @@ Packages utilises (selon notebook):
 - scikit-learn
 - kagglehub
 
-## Installation rapide
+## Quick setup
 
 ```bash
 python -m venv .venv
@@ -106,43 +106,43 @@ pip install --upgrade pip
 pip install numpy pandas matplotlib scikit-learn jupyter kagglehub
 ```
 
-## Execution
+## Running the project
 
-1. Ouvrir le dossier du projet
-2. Lancer Jupyter/VS Code
-3. Ouvrir `unsupervised_clustering.ipynb` puis executer les cellules dans l'ordre
-4. Ouvrir `kaggle_dataset.ipynb` puis executer les cellules dans l'ordre
+1. Open the project folder
+2. Launch Jupyter/VS Code
+3. Open `unsupervised_clustering.ipynb` and run the cells in order
+4. Open `kaggle_dataset.ipynb` and run the cells in order
 
-## Resultats attendus
+## Expected results
 
 ### Clustering (NLP)
 
-- Tableau de ranking des configurations de clustering
-- Modele retenu automatiquement
-- Graphiques PCA (couleur dataset vs cluster predit)
-- Mots-cles representatifs par cluster
+- Ranking table of clustering configurations
+- Automatically selected best model
+- PCA plots (dataset color vs predicted cluster)
+- Representative keywords per cluster
 
 ### Images (Kaggle)
 
-- Resume du nettoyage (doublons/corruptions)
-- Tailles des splits train/val/test
-- Accuracy validation et test
-- Rapport de classification
-- Graphiques de diagnostic
+- Cleaning summary (duplicates/corruptions)
+- Train/val/test split sizes
+- Validation and test accuracy
+- Classification report
+- Diagnostic plots
 
-## Limites
+## Limitations
 
-- Le clustering non supervise reste sensible au preprocessing et aux hyperparametres
-- Si la colonne `color` est uniforme, la verification visuelle par couleur est moins informative
-- La baseline RandomForest sur images aplaties est un point de depart, pas un SOTA
+- Unsupervised clustering remains sensitive to preprocessing and hyperparameters
+- If the `color` column is uniform, visual color-based checks are less informative
+- The RandomForest baseline on flattened images is a starting point, not SOTA
 
-## Pistes d'amelioration
+## Improvement ideas
 
-- Tester des embeddings modernes pour le texte (Sentence Transformers)
-- Evaluer la stabilite des clusters sur plusieurs seeds/sous-echantillons
-- Remplacer la baseline image par un CNN (transfer learning)
-- Ajouter un fichier `requirements.txt` versionne pour une meilleure reproductibilite
+- Test modern text embeddings (Sentence Transformers)
+- Evaluate cluster stability across multiple seeds/subsamples
+- Replace the image baseline with a CNN (transfer learning)
+- Add a versioned `requirements.txt` file for better reproducibility
 
-## Auteurs
+## Authors
 
-Projet realise dans le cadre de CR-CVRIE (Epitech).
+Project completed as part of CR-CVRIE (Epitech).
